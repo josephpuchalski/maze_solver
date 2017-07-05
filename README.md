@@ -10,13 +10,15 @@ With this Maze Solver, users will be able to do the following:
  - Grid will be fixed to a square so it is not too big for the screen
  - There will be limitations on grid amount to avoid lag issues from overloading the browser
  - Users will be able to click solve and see the shortest path from Start to End from the base they created
+ - Enable code to be able to extend to other apps by utilizing the pathfinding process. This can be used for AI to find targets on a specific grid-type board.
 
 ## Wireframes
 
 The app will be a single screen which will have various buttons to perform the many actions that they can do. The UI is still tentative but will include the following buttons:
-- Create Grid
-- Input for Grid Size (Ex. 20 x 20)
-- Solve button (Shortest Path)
+- Create Custom Grid (Advanced) including input for Grid Size (the grid still maintain overall shape of container)
+- Utilize two standard grid sizes (10 x 10, 20 x 20) for ease of use and demonstration
+- Preload a variety of seed mazes for quick generation and solving
+- Solve button to execute algorithm (Shortest Path)
 - Visual Solve button (Show the solving process and Shortest Path)
 
   (IMAGE COMING SOON)
@@ -24,8 +26,7 @@ The app will be a single screen which will have various buttons to perform the m
 ## Architecture and Technologies
   This project will implement the following technologies:
   - JavaScript
-  - React.js
-  - Redux
+  - jQuery
 
 ## Implementation Timeline
 
