@@ -30,10 +30,10 @@ The app will be a single screen which will have various buttons to perform the m
 ## Implementation Timeline
 
 ### Day 1
-Setup files and organize project. Write out a complete overview of files needed and classes to be utilized.
+Setup files and organize project. Write out a complete overview of files needed and classes to be utilized. Spend time getting acquainted with the A* algorithm and the Manhattan method.
 
 ### Day 2
-Bulk of code is written and algorithms applied. This will involve how to properly account to edge cases in the maze solving process.
+Utilize previous days knowledge to write the bulk of code and apply the various algorithms. This will involve how to properly account to edge cases in the maze solving process. Also, create groundwork for user interaction on website by allowing them to generate their own grids in JavaScript.
 
 ### Day 3
 Refactor code and break down long functions with helper functions. Polish UI with CSS3 to make it smooth and streamlined. Also, look for performance enhancements on time to solve larger mazes.
