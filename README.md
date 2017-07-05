@@ -6,7 +6,7 @@ Joey P's Maze Solver utilizes the A* algorithm to solve a maze problem on the fl
 ## Functionality & MVP
 
 With this Maze Solver, users will be able to do the following:
- - Crete a custom maze based on their own grid selection
+ - Create a custom maze based on their own grid selection
  - Grid will be fixed to a square so it is not too big for the screen
  - There will be limitations on grid amount to avoid lag issues from overloading the browser
  - Users will be able to click solve and see the shortest path from Start to End from the base they created
