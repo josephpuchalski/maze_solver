@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   });
 
+  $(".clear").on("click", function() {
+    $(".grid").removeClass("black blue");
+  });
+
 var a = new Square({});
 a.parent = "Joseph";
 console.log(a);

@@ -225,8 +225,13 @@ class Maze {
     //   return pos;
     // });
 
-    debugger;
+
     orthogonal.forEach(location => {
+      console.log(location);
+      if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
+        return;
+      }
+
       if ((this.maze[location[0]][location[1]] instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) && this.openList.includes(JSON.stringify(location))) {
 
         if (this.maze[pos[0]][pos[1]].g + 10 < this.maze[location[0]][location[1]].g) {
@@ -235,6 +240,7 @@ class Maze {
           this.maze[location[0]][location[1]].f = this.maze[location[0]][location[1]].g + this.maze[location[0]][location[1]].h;
         }
       } else if (this.maze[location[0]][location[1]] instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
+
         this.maze[location[0]][location[1]].parent = pos;
         this.maze[location[0]][location[1]].g = 10 + this.maze[pos[0]][pos[1]].g;
         this.maze[location[0]][location[1]].h = this.calculateH(location, this.end);
@@ -259,7 +265,17 @@ class Maze {
       parent = this.maze[parent[0]][parent[1]].parent;
     }
 
-    return pathway;
+    let formatPath = pathway.map(pos => { return JSON.parse(pos);});
+    console.log(pathway);
+    let divToChange = [];
+    formatPath.forEach(arr => {
+      let sum = parseInt(`${arr[0]}${arr[1]}`);
+      divToChange.push(sum);
+    });
+    console.log(divToChange);
+    divToChange.forEach(block => {
+      $(`#${block}`).addClass("blue");
+    });
   }
 
   solve() {
@@ -295,7 +311,7 @@ class Maze {
         position = pos;
       }
     });
-    debugger;
+
     return position;
   }
 
@@ -388,6 +404,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+  });
+
+  $(".clear").on("click", function() {
+    $(".grid").removeClass("black blue");
   });
 
 var a = new __WEBPACK_IMPORTED_MODULE_1__square_js__["a" /* default */]({});
