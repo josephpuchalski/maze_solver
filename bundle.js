@@ -87,6 +87,7 @@ class Maze {
 
 
   processMaze() {
+    $(".grid").removeClass("blue");
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
@@ -211,54 +212,69 @@ class Maze {
   }
 
   calculateOpenAdjacentSquares(pos) {
+    this.diagonal(pos);
+    this.orthogonal(pos);
+  }
 
-    // let diagonal = [northwest(pos), southwest(pos), southeast(pos), northeast(pos)];
-    let orthogonal = [this.north(pos), this.south(pos), this.west(pos), this.east(pos)];
+  diagonal(pos) {
+    let diagonal = [this.northwest(pos), this.southwest(pos), this.southeast(pos), this.northeast(pos)];
 
-    // let stringedOpenList = this.openList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
-    //
-    // let stringedClosedList = this.closedList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
-
-
-    orthogonal.forEach(location => {
-      console.log(location);
+    diagonal.forEach(location => {
       if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
         return;
       }
 
-      if ((this.maze[location[0]][location[1]] instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) && this.openList.includes(JSON.stringify(location))) {
-
-        if (this.maze[pos[0]][pos[1]].g + 10 < this.maze[location[0]][location[1]].g) {
-          this.maze[location[0]][location[1]].g = 10 + this.maze[pos[0]][pos[1]].g;
-          this.maze[location[0]][location[1]].parent = pos;
-          this.maze[location[0]][location[1]].f = this.maze[location[0]][location[1]].g + this.maze[location[0]][location[1]].h;
+      let newSquare = this.maze[location[0]][location[1]];
+      let parentSquare = this.maze[pos[0]][pos[1]];
+      if ((newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) && this.openList.includes(JSON.stringify(location))) {
+        if (parentSquare.g + 14 < newSquare.g) {
+          newSquare.g = 14 + parentSquare.g;
+          newSquare.parent = pos;
+          newSquare.f = newSquare.g + newSquare.h;
         }
-      } else if (this.maze[location[0]][location[1]] instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
-
-        this.maze[location[0]][location[1]].parent = pos;
-        this.maze[location[0]][location[1]].g = 10 + this.maze[pos[0]][pos[1]].g;
-        this.maze[location[0]][location[1]].h = this.calculateH(location, this.end);
-        this.maze[location[0]][location[1]].f = this.maze[location[0]][location[1]].g + this.maze[location[0]][location[1]].h;
+      } else if (newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
+        if (newSquare.start !== true) {
+          newSquare.parent = pos;
+        }
+        newSquare.g = 14 + parentSquare.g;
+        newSquare.h = this.calculateH(location, this.end);
+        newSquare.f = newSquare.g + newSquare.h;
         this.openList.push(JSON.stringify(location));
-
       }
     });
   }
 
+  orthogonal(pos) {
+    let orthogonal = [this.north(pos), this.south(pos), this.west(pos), this.east(pos)];
+
+    orthogonal.forEach(location => {
+      if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
+        return;
+      }
+
+      let newSquare = this.maze[location[0]][location[1]];
+      let parentSquare = this.maze[pos[0]][pos[1]];
+      if ((newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) && this.openList.includes(JSON.stringify(location))) {
+
+        if (parentSquare.g + 10 < newSquare.g) {
+          newSquare.g = 10 + parentSquare.g;
+          newSquare.parent = pos;
+          newSquare.f = newSquare.g + newSquare.h;
+        }
+      } else if (newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
+        newSquare.parent = pos;
+        newSquare.g = 10 + parentSquare.g;
+        newSquare.h = this.calculateH(location, this.end);
+        newSquare.f = newSquare.g + newSquare.h;
+        this.openList.push(JSON.stringify(location));
+      }
+    });
+  }
+
+
   path() {
     let pathway = [];
     let parent = this.end;
-
-    // stringedPathway = pathway.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
 
     while (!pathway.includes(JSON.stringify(this.start))) {
       pathway.push(JSON.stringify(parent));
@@ -269,7 +285,7 @@ class Maze {
     console.log(pathway);
     let divToChange = [];
     formatPath.forEach(arr => {
-      let sum = parseInt(`${arr[0]}${arr[1]}`);
+      let sum = arr[0] * input + arr[1];
       divToChange.push(sum);
     });
     console.log(divToChange);
@@ -282,12 +298,6 @@ class Maze {
     this.openList.push(JSON.stringify(this.start));
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
-
-    // let stringedOpenList = this.openList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
-
 
     while (!this.openList.includes(JSON.stringify(this.end))) {
       let nextMove = this.lowestFCost();
@@ -302,7 +312,6 @@ class Maze {
 
   lowestFCost() {
     let position;
-    // let lowest = this.maze[this.openList[0][0]][this.openList[0][1]].f;
     let lowest = 1000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
