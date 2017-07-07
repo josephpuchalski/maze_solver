@@ -115,30 +115,6 @@ class Maze {
     });
 
     this.maze = result;
-    // let block = 0;
-    // let open = 0;
-    // let start = 0;
-    // let end = 0;
-    //
-    // for (var i = 0; i < this.maze.length; i++) {
-    //   for (var j = 0; j < this.maze[i].length; j++) {
-    //     switch (this.maze[i][j]) {
-    //       case "block":
-    //         block += 1;
-    //         break;
-    //       case "open":
-    //         open += 1;
-    //         break;
-    //       case "start":
-    //         start += 1;
-    //         break;
-    //       case "end":
-    //         end += 1;
-    //         break;
-    //     }
-    //   }
-    // }
-    // console.log(`There are ${block} blocks, ${open} open spaces, ${start} start and ${end} end`);
   }
 
 
@@ -212,8 +188,13 @@ class Maze {
   }
 
   calculateOpenAdjacentSquares(pos) {
+
+
     this.diagonal(pos);
     this.orthogonal(pos);
+
+
+
   }
 
   diagonal(pos) {
@@ -251,7 +232,6 @@ class Maze {
       if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
         return;
       }
-
       let newSquare = this.maze[location[0]][location[1]];
       let parentSquare = this.maze[pos[0]][pos[1]];
       if ((newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) && this.openList.includes(JSON.stringify(location))) {
@@ -276,6 +256,7 @@ class Maze {
     let pathway = [];
     let parent = this.end;
 
+
     while (!pathway.includes(JSON.stringify(this.start))) {
       pathway.push(JSON.stringify(parent));
       parent = this.maze[parent[0]][parent[1]].parent;
@@ -285,6 +266,7 @@ class Maze {
     console.log(pathway);
     let divToChange = [];
     formatPath.forEach(arr => {
+
       let sum = arr[0] * input + arr[1];
       divToChange.push(sum);
     });
@@ -299,6 +281,8 @@ class Maze {
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
 
+
+
     while (!this.openList.includes(JSON.stringify(this.end))) {
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
@@ -312,6 +296,7 @@ class Maze {
 
   lowestFCost() {
     let position;
+  
     let lowest = 1000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
@@ -409,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
     maze.processMaze();
     maze.solve();
     console.log(maze);
-    // maze.display();
 
 
 

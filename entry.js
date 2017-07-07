@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     maze.processMaze();
     maze.solve();
     console.log(maze);
-    // maze.display();
 
 
 
