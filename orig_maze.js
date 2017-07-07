@@ -141,31 +141,31 @@ class Maze {
     // let diagonal = [northwest(pos), southwest(pos), southeast(pos), northeast(pos)];
     let orthogonal = [this.north(pos), this.south(pos), this.west(pos), this.east(pos)];
 
-    // let stringedOpenList = this.openList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
-    //
-    // let stringedClosedList = this.closedList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
+    let stringedOpenList = this.openList.map(pos => {
+      pos = JSON.stringify(pos);
+      return pos;
+    });
+
+    let stringedClosedList = this.closedList.map(pos => {
+      pos = JSON.stringify(pos);
+      return pos;
+    });
 
     debugger;
     orthogonal.forEach(location => {
-      if ((this.maze[location[0]][location[1]] instanceof Square) && this.openList.includes(JSON.stringify(location))) {
+      if ((this.maze[location[0]][location[1]] instanceof Square) && stringedOpenList.includes(JSON.stringify(location))) {
 
         if (this.maze[pos[0]][pos[1]].g + 10 < this.maze[location[0]][location[1]].g) {
           this.maze[location[0]][location[1]].g = 10 + this.maze[pos[0]][pos[1]].g;
           this.maze[location[0]][location[1]].parent = pos;
           this.maze[location[0]][location[1]].f = this.maze[location[0]][location[1]].g + this.maze[location[0]][location[1]].h;
         }
-      } else if (this.maze[location[0]][location[1]] instanceof Square && !this.closedList.includes(JSON.stringify(location))) {
+      } else if (this.maze[location[0]][location[1]] instanceof Square && !stringedClosedList.includes(JSON.stringify(location))) {
         this.maze[location[0]][location[1]].parent = pos;
         this.maze[location[0]][location[1]].g = 10 + this.maze[pos[0]][pos[1]].g;
         this.maze[location[0]][location[1]].h = this.calculateH(location, this.end);
         this.maze[location[0]][location[1]].f = this.maze[location[0]][location[1]].g + this.maze[location[0]][location[1]].h;
-        this.openList.push(JSON.stringify(location));
+        this.openList.push(location);
 
       }
     });
@@ -189,33 +189,36 @@ class Maze {
   }
 
   solve() {
-    this.openList.push(JSON.stringify(this.start));
-    this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
+    this.openList.push(this.start);
+    this.calculateOpenAdjacentSquares(this.openList[0]);
     this.closedList.push(this.openList.shift());
+    debugger;
 
-    // let stringedOpenList = this.openList.map(pos => {
-    //   pos = JSON.stringify(pos);
-    //   return pos;
-    // });
+    let stringedOpenList = this.openList.map(pos => {
+      pos = JSON.stringify(pos);
+      return pos;
+    });
 
 
-    while (!this.openList.includes(JSON.stringify(this.end))) {
+    while (!stringedOpenList.includes(JSON.stringify(this.end))) {
       let nextMove = this.lowestFCost();
-      let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
-      let removedPos = this.openList.splice(nextMoveIndex, 1);
+      let nextMoveIndex = stringedOpenList.indexOf(JSON.stringify(nextMove));
+      stringedOpenList.splice(nextMoveIndex, nextMoveIndex);
+      let removedPos = this.openList.splice(nextMoveIndex, nextMoveIndex);
+      debugger;
       this.closedList.push(removedPos[0]);
+      debugger;
       this.calculateOpenAdjacentSquares(nextMove);
     }
 
     console.log(this.path());
+    console.log(this.display());
   }
 
   lowestFCost() {
     let position;
-    // let lowest = this.maze[this.openList[0][0]][this.openList[0][1]].f;
-    let lowest = 1000000;
+    let lowest = this.maze[this.openList[0][0]][this.openList[0][1]].f;
     this.openList.forEach(pos => {
-      pos = JSON.parse(pos);
       if (this.maze[pos[0]][pos[1]].f < lowest) {
         lowest = this.maze[pos[0]][pos[1]].f;
         position = pos;

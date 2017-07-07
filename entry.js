@@ -45,7 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".solve").on("click", function() {
     let maze = new Maze();
     maze.processMaze();
+    maze.solve();
     console.log(maze);
+    // maze.display();
+
+
+
   });
 
 var a = new Square({});
@@ -60,7 +65,14 @@ console.log(a);
 
 
 
-
+// test code to see how many areas are blocked(null)
+// for (var i = 0; i < maze.maze.length; i++) {
+//   for (var j = 0; j < maze.maze[i].length; j++) {
+//     if (maze.maze[i][j] === null) {
+//       console.log("empty");
+//     }
+//   }
+// }
 
 
 
