@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("black blue");
+    $(".grid").removeClass("black blue purple");
   });
 
 var a = new Square({});

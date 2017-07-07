@@ -13,7 +13,7 @@ class Maze {
 
 
   processMaze() {
-    $(".grid").removeClass("blue");
+    $(".grid").removeClass("blue purple");
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
@@ -190,6 +190,22 @@ class Maze {
 
     let formatPath = pathway.map(pos => { return JSON.parse(pos);});
     console.log(pathway);
+    let totalChecked = this.openList.concat(this.closedList);
+    totalChecked = totalChecked.map(pos => { return JSON.parse(pos);})
+    console.log(totalChecked);
+    let divToMap = [];
+    totalChecked.forEach(arr => {
+      let sum = arr[0] * input + arr[1];
+      divToMap.push(sum);
+    });
+
+    console.log(divToMap);
+    divToMap.forEach(block => {
+      $(`#${block}`).addClass("purple");
+    });
+
+
+
     let divToChange = [];
     formatPath.forEach(arr => {
 
@@ -200,6 +216,7 @@ class Maze {
     divToChange.forEach(block => {
       $(`#${block}`).addClass("blue");
     });
+
   }
 
   solve() {
@@ -216,13 +233,14 @@ class Maze {
       this.closedList.push(removedPos[0]);
       this.calculateOpenAdjacentSquares(nextMove);
     }
-
+    console.log(this.openList);
+    console.log(this.closedList);
     console.log(this.path());
   }
 
   lowestFCost() {
     let position;
-  
+
     let lowest = 1000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
