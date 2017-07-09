@@ -116,18 +116,20 @@ class Maze {
   calculateOpenAdjacentSquares(pos) {
 
 
-    this.diagonal(pos);
-    this.orthogonal(pos);
+    let ignorePos = this.orthogonal(pos);
+    this.diagonal(pos, ignorePos);
 
 
 
   }
 
-  diagonal(pos) {
+  diagonal(pos, ignorePos) {
     let diagonal = [this.northwest(pos), this.southwest(pos), this.southeast(pos), this.northeast(pos)];
 
     diagonal.forEach(location => {
       if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
+        return;
+      } else if (ignorePos.includes(JSON.stringify(location))) {
         return;
       }
 
@@ -153,13 +155,31 @@ class Maze {
 
   orthogonal(pos) {
     let orthogonal = [this.north(pos), this.south(pos), this.west(pos), this.east(pos)];
-
-    orthogonal.forEach(location => {
+    let ignorePos = [];
+    orthogonal.forEach((location, idx) => {
       if (Math.min(...location) < 0 || Math.max(...location) > input - 1) {
         return;
       }
       let newSquare = this.maze[location[0]][location[1]];
       let parentSquare = this.maze[pos[0]][pos[1]];
+
+      if (newSquare === null) {
+        switch (idx) {
+          case 0:
+            ignorePos.push(JSON.stringify(this.northwest(pos)), JSON.stringify(this.northeast(pos)));
+            break;
+          case 1:
+            ignorePos.push(JSON.stringify(this.southwest(pos)), JSON.stringify(this.southeast(pos)));
+              break;
+          case 2:
+            ignorePos.push(JSON.stringify(this.northwest(pos)), JSON.stringify(this.southwest(pos)));
+              break;
+          case 3:
+          ignorePos.push(JSON.stringify(this.northeast(pos)), JSON.stringify(this.southeast(pos)));
+            break;
+        }
+      }
+
       if ((newSquare instanceof Square) && this.openList.includes(JSON.stringify(location))) {
 
         if (parentSquare.g + 10 < newSquare.g) {
@@ -175,6 +195,7 @@ class Maze {
         this.openList.push(JSON.stringify(location));
       }
     });
+    return ignorePos;
   }
 
 
@@ -191,7 +212,7 @@ class Maze {
     let formatPath = pathway.map(pos => { return JSON.parse(pos);});
     console.log(pathway);
     let totalChecked = this.openList.concat(this.closedList);
-    totalChecked = totalChecked.map(pos => { return JSON.parse(pos);})
+    totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
     console.log(totalChecked);
     let divToMap = [];
     totalChecked.forEach(arr => {
