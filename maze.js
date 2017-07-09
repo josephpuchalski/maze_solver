@@ -44,25 +44,25 @@ class Maze {
   }
 
 
-  display() {
-    this.maze.forEach((section) => {
-      section.forEach((piece) => {
-        if (piece instanceof Square) {
-          if (piece.start === true) {
-            piece = "S";
-          } else if (piece.end === true) {
-            piece = "E";
-          } else {
-            piece = "O";
-          }
-        } else {
-          piece = "#";
-        }
-        console.log(`${piece} `);
-      });
-      console.log("\n");
-    });
-  }
+  // display() {
+  //   this.maze.forEach((section) => {
+  //     section.forEach((piece) => {
+  //       if (piece instanceof Square) {
+  //         if (piece.start === true) {
+  //           piece = "S";
+  //         } else if (piece.end === true) {
+  //           piece = "E";
+  //         } else {
+  //           piece = "O";
+  //         }
+  //       } else {
+  //         piece = "#";
+  //       }
+  //       console.log(`${piece} `);
+  //     });
+  //     console.log("\n");
+  //   });
+  // }
 
 
   north(pos) {
@@ -209,36 +209,83 @@ class Maze {
       parent = this.maze[parent[0]][parent[1]].parent;
     }
 
-    let formatPath = pathway.map(pos => { return JSON.parse(pos);});
-    console.log(pathway);
-    let totalChecked = this.openList.concat(this.closedList);
-    totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
-    console.log(totalChecked);
+    // let formatPath = pathway.map(pos => { return JSON.parse(pos);});
+    //
+    // let totalChecked = this.openList.concat(this.closedList);
+    // totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+    //
+    // let divToMap = [];
+    // totalChecked.forEach(arr => {
+    //   let sum = arr[0] * input + arr[1];
+    //   divToMap.push(sum);
+    // });
+    //
+    // console.log(divToMap);
+    // divToMap.forEach(block => {
+    //   $(`#${block}`).addClass("purple");
+    // });
+
+    this.colorizeList(this.closedList, "purple");
+    this.colorizeList(this.openList, "yellow");
+    this.colorizeList(pathway, "blue");
+    // let divToChange = [];
+    // formatPath.forEach(arr => {
+    //
+    //   let sum = arr[0] * input + arr[1];
+    //   divToChange.push(sum);
+    // });
+    // // console.log(divToChange);
+    // divToChange.forEach(block => {
+    //   $(`#${block}`).addClass("blue");
+    // });
+
+  }
+
+  colorizeList(list, color) {
+    let toColorize = list.map(pos => { return JSON.parse(pos);});
+
     let divToMap = [];
-    totalChecked.forEach(arr => {
+    toColorize.forEach(arr => {
       let sum = arr[0] * input + arr[1];
       divToMap.push(sum);
     });
 
-    console.log(divToMap);
     divToMap.forEach(block => {
-      $(`#${block}`).addClass("purple");
+      $(`#${block}`).addClass(color);
     });
-
-
-
-    let divToChange = [];
-    formatPath.forEach(arr => {
-
-      let sum = arr[0] * input + arr[1];
-      divToChange.push(sum);
-    });
-    console.log(divToChange);
-    divToChange.forEach(block => {
-      $(`#${block}`).addClass("blue");
-    });
-
   }
+
+  // colorizeOpenList() {
+  //   let totalChecked = this.openList.concat(this.closedList);
+  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+  //
+  //   let divToMap = [];
+  //   totalChecked.forEach(arr => {
+  //     let sum = arr[0] * input + arr[1];
+  //     divToMap.push(sum);
+  //   });
+  //
+  //   console.log(divToMap);
+  //   divToMap.forEach(block => {
+  //     $(`#${block}`).addClass("purple");
+  //   });
+  // }
+  //
+  // colorizeClosedList() {
+  //   let totalChecked = this.openList.concat(this.closedList);
+  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+  //
+  //   let divToMap = [];
+  //   totalChecked.forEach(arr => {
+  //     let sum = arr[0] * input + arr[1];
+  //     divToMap.push(sum);
+  //   });
+  //
+  //   console.log(divToMap);
+  //   divToMap.forEach(block => {
+  //     $(`#${block}`).addClass("purple");
+  //   });
+  // }
 
   solve() {
     this.openList.push(JSON.stringify(this.start));
@@ -256,7 +303,7 @@ class Maze {
     }
     console.log(this.openList);
     console.log(this.closedList);
-    console.log(this.path());
+    this.path();
   }
 
   lowestFCost() {

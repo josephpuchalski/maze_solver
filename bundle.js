@@ -71,7 +71,26 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__square_js__ = __webpack_require__(1);
+class Square {
+  constructor(options = {}) {
+    this.parent = options.parent;
+    this.start = options.start;
+    this.end = options.end;
+    this.f = 0;
+    this.g = 0;
+    this.h = 0;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Square);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__square_js__ = __webpack_require__(0);
 
 
 class Maze {
@@ -118,25 +137,25 @@ class Maze {
   }
 
 
-  display() {
-    this.maze.forEach((section) => {
-      section.forEach((piece) => {
-        if (piece instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]) {
-          if (piece.start === true) {
-            piece = "S";
-          } else if (piece.end === true) {
-            piece = "E";
-          } else {
-            piece = "O";
-          }
-        } else {
-          piece = "#";
-        }
-        console.log(`${piece} `);
-      });
-      console.log("\n");
-    });
-  }
+  // display() {
+  //   this.maze.forEach((section) => {
+  //     section.forEach((piece) => {
+  //       if (piece instanceof Square) {
+  //         if (piece.start === true) {
+  //           piece = "S";
+  //         } else if (piece.end === true) {
+  //           piece = "E";
+  //         } else {
+  //           piece = "O";
+  //         }
+  //       } else {
+  //         piece = "#";
+  //       }
+  //       console.log(`${piece} `);
+  //     });
+  //     console.log("\n");
+  //   });
+  // }
 
 
   north(pos) {
@@ -283,36 +302,83 @@ class Maze {
       parent = this.maze[parent[0]][parent[1]].parent;
     }
 
-    let formatPath = pathway.map(pos => { return JSON.parse(pos);});
-    console.log(pathway);
-    let totalChecked = this.openList.concat(this.closedList);
-    totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
-    console.log(totalChecked);
+    // let formatPath = pathway.map(pos => { return JSON.parse(pos);});
+    //
+    // let totalChecked = this.openList.concat(this.closedList);
+    // totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+    //
+    // let divToMap = [];
+    // totalChecked.forEach(arr => {
+    //   let sum = arr[0] * input + arr[1];
+    //   divToMap.push(sum);
+    // });
+    //
+    // console.log(divToMap);
+    // divToMap.forEach(block => {
+    //   $(`#${block}`).addClass("purple");
+    // });
+
+    this.colorizeList(this.closedList, "purple");
+    this.colorizeList(this.openList, "yellow");
+    this.colorizeList(pathway, "blue");
+    // let divToChange = [];
+    // formatPath.forEach(arr => {
+    //
+    //   let sum = arr[0] * input + arr[1];
+    //   divToChange.push(sum);
+    // });
+    // // console.log(divToChange);
+    // divToChange.forEach(block => {
+    //   $(`#${block}`).addClass("blue");
+    // });
+
+  }
+
+  colorizeList(list, color) {
+    let toColorize = list.map(pos => { return JSON.parse(pos);});
+
     let divToMap = [];
-    totalChecked.forEach(arr => {
+    toColorize.forEach(arr => {
       let sum = arr[0] * input + arr[1];
       divToMap.push(sum);
     });
 
-    console.log(divToMap);
     divToMap.forEach(block => {
-      $(`#${block}`).addClass("purple");
+      $(`#${block}`).addClass(color);
     });
-
-
-
-    let divToChange = [];
-    formatPath.forEach(arr => {
-
-      let sum = arr[0] * input + arr[1];
-      divToChange.push(sum);
-    });
-    console.log(divToChange);
-    divToChange.forEach(block => {
-      $(`#${block}`).addClass("blue");
-    });
-
   }
+
+  // colorizeOpenList() {
+  //   let totalChecked = this.openList.concat(this.closedList);
+  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+  //
+  //   let divToMap = [];
+  //   totalChecked.forEach(arr => {
+  //     let sum = arr[0] * input + arr[1];
+  //     divToMap.push(sum);
+  //   });
+  //
+  //   console.log(divToMap);
+  //   divToMap.forEach(block => {
+  //     $(`#${block}`).addClass("purple");
+  //   });
+  // }
+  //
+  // colorizeClosedList() {
+  //   let totalChecked = this.openList.concat(this.closedList);
+  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
+  //
+  //   let divToMap = [];
+  //   totalChecked.forEach(arr => {
+  //     let sum = arr[0] * input + arr[1];
+  //     divToMap.push(sum);
+  //   });
+  //
+  //   console.log(divToMap);
+  //   divToMap.forEach(block => {
+  //     $(`#${block}`).addClass("purple");
+  //   });
+  // }
 
   solve() {
     this.openList.push(JSON.stringify(this.start));
@@ -330,7 +396,7 @@ class Maze {
     }
     console.log(this.openList);
     console.log(this.closedList);
-    console.log(this.path());
+    this.path();
   }
 
   lowestFCost() {
@@ -358,32 +424,13 @@ class Maze {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Square {
-  constructor(options = {}) {
-    this.parent = options.parent;
-    this.start = options.start;
-    this.end = options.end;
-    this.f = 0;
-    this.g = 0;
-    this.h = 0;
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Square);
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__maze_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__square_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__maze_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__square_js__ = __webpack_require__(0);
 
 
 
@@ -439,12 +486,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("black blue purple");
+    $(".grid").removeClass("blue purple yellow");
   });
-
-var a = new __WEBPACK_IMPORTED_MODULE_1__square_js__["a" /* default */]({});
-a.parent = "Joseph";
-console.log(a);
 
 
 
