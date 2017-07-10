@@ -9,8 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("How many grids do you want?");
-
+    var input = prompt("What grid size do you want? (Max: 50)");
+    while (input > 50) {
+      prompt("Sorry, the max grid size is 50. Please choose a lower number.")
+      input = prompt("What grid size do you want?")
+    }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
 
@@ -21,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var gridCount = input * input;
 
-    $("body").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
-    $("body").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
+    $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
+    $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
 
     for (var i = 0; i < gridCount; i++){
         $("#container").append(`<div class='grid' id=${i} ondrop="drop(event)" ondragover="allowDrop(event)"></div>`);
@@ -57,7 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
 
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, 0, 50, 50);
 
 
 

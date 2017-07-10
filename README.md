@@ -1,11 +1,11 @@
-# Joey P's Maze Solver
+# Joey P's Path Finder
 
 ## Background
-Joey P's Maze Solver utilizes the A* algorithm to solve a maze problem on the fly. A user will be able to create a maze grid on the website and then have it immediately solved. The algorithm will do its magic and solve whatever the user has created with the shortest path possible.
+Joey P's Path Finder utilizes the A* algorithm to solve a maze problem on the fly. A user will be able to create a maze grid on the website and then have it immediately solved. The algorithm will do its magic and solve whatever the user has created with the shortest path possible.
 
 ## Functionality & MVP
 
-With this Maze Solver, users will be able to do the following:
+With this Path Finder, users will be able to do the following:
  - Create a custom maze based on their own grid selection
  - Grid will be fixed to a square so it is not too big for the screen
  - There will be limitations on grid amount to avoid lag issues from overloading the browser

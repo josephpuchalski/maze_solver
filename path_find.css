@@ -1,0 +1,64 @@
+* {
+  margin:0;
+  padding:0;
+  border: 0;
+}
+
+.start-end {
+  display:flex;
+  justify-content: center;
+}
+
+#container {
+  position:relative;
+  background:white;
+  width:500px;
+  height:500px;
+  margin:0 auto;
+}
+
+
+.grid {
+  float:left;
+  background:transparent;
+  box-shadow: inset 0 0 1px silver;
+}
+
+body {
+  z-index: -10;
+  text-align:center;
+
+}
+button {
+
+}
+
+.black {
+  background: black;
+}
+
+
+.purple {
+  background: purple;
+}
+.blue {
+  background: blue;
+}
+
+.yellow {
+  background:yellow;
+}
+
+#start {
+  background: green;
+}
+
+#end {
+  background: red;
+}
+
+#canvas {
+  position:absolute;
+  left: 0px;
+  z-index: -1;
+}

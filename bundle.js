@@ -103,10 +103,8 @@ class Maze {
     this.end = null;
   }
 
-
-
   processMaze() {
-    $(".grid").removeClass("blue purple");
+    $(".grid").removeClass("blue purple yellow");
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
@@ -135,27 +133,6 @@ class Maze {
 
     this.maze = result;
   }
-
-
-  // display() {
-  //   this.maze.forEach((section) => {
-  //     section.forEach((piece) => {
-  //       if (piece instanceof Square) {
-  //         if (piece.start === true) {
-  //           piece = "S";
-  //         } else if (piece.end === true) {
-  //           piece = "E";
-  //         } else {
-  //           piece = "O";
-  //         }
-  //       } else {
-  //         piece = "#";
-  //       }
-  //       console.log(`${piece} `);
-  //     });
-  //     console.log("\n");
-  //   });
-  // }
 
 
   north(pos) {
@@ -207,13 +184,8 @@ class Maze {
   }
 
   calculateOpenAdjacentSquares(pos) {
-
-
     let ignorePos = this.orthogonal(pos);
     this.diagonal(pos, ignorePos);
-
-
-
   }
 
   diagonal(pos, ignorePos) {
@@ -235,9 +207,9 @@ class Maze {
           newSquare.f = newSquare.g + newSquare.h;
         }
       } else if (newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
-        if (newSquare.start !== true) {
+        // if (newSquare.start !== true) {
           newSquare.parent = pos;
-        }
+        // }
         newSquare.g = 14 + parentSquare.g;
         newSquare.h = this.calculateH(location, this.end);
         newSquare.f = newSquare.g + newSquare.h;
@@ -263,12 +235,12 @@ class Maze {
             break;
           case 1:
             ignorePos.push(JSON.stringify(this.southwest(pos)), JSON.stringify(this.southeast(pos)));
-              break;
+            break;
           case 2:
             ignorePos.push(JSON.stringify(this.northwest(pos)), JSON.stringify(this.southwest(pos)));
-              break;
+            break;
           case 3:
-          ignorePos.push(JSON.stringify(this.northeast(pos)), JSON.stringify(this.southeast(pos)));
+            ignorePos.push(JSON.stringify(this.northeast(pos)), JSON.stringify(this.southeast(pos)));
             break;
         }
       }
@@ -296,96 +268,35 @@ class Maze {
     let pathway = [];
     let parent = this.end;
 
-
     while (!pathway.includes(JSON.stringify(this.start))) {
       pathway.push(JSON.stringify(parent));
       parent = this.maze[parent[0]][parent[1]].parent;
     }
 
-    // let formatPath = pathway.map(pos => { return JSON.parse(pos);});
-    //
-    // let totalChecked = this.openList.concat(this.closedList);
-    // totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
-    //
-    // let divToMap = [];
-    // totalChecked.forEach(arr => {
-    //   let sum = arr[0] * input + arr[1];
-    //   divToMap.push(sum);
-    // });
-    //
-    // console.log(divToMap);
-    // divToMap.forEach(block => {
-    //   $(`#${block}`).addClass("purple");
-    // });
-
     this.colorizeList(this.closedList, "purple");
     this.colorizeList(this.openList, "yellow");
     this.colorizeList(pathway, "blue");
-    // let divToChange = [];
-    // formatPath.forEach(arr => {
-    //
-    //   let sum = arr[0] * input + arr[1];
-    //   divToChange.push(sum);
-    // });
-    // // console.log(divToChange);
-    // divToChange.forEach(block => {
-    //   $(`#${block}`).addClass("blue");
-    // });
-
   }
 
   colorizeList(list, color) {
     let toColorize = list.map(pos => { return JSON.parse(pos);});
 
-    let divToMap = [];
+    let divToColor = [];
     toColorize.forEach(arr => {
       let sum = arr[0] * input + arr[1];
-      divToMap.push(sum);
+      divToColor.push(sum);
     });
 
-    divToMap.forEach(block => {
+    divToColor.forEach(block => {
       $(`#${block}`).addClass(color);
     });
   }
 
-  // colorizeOpenList() {
-  //   let totalChecked = this.openList.concat(this.closedList);
-  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
-  //
-  //   let divToMap = [];
-  //   totalChecked.forEach(arr => {
-  //     let sum = arr[0] * input + arr[1];
-  //     divToMap.push(sum);
-  //   });
-  //
-  //   console.log(divToMap);
-  //   divToMap.forEach(block => {
-  //     $(`#${block}`).addClass("purple");
-  //   });
-  // }
-  //
-  // colorizeClosedList() {
-  //   let totalChecked = this.openList.concat(this.closedList);
-  //   totalChecked = totalChecked.map(pos => { return JSON.parse(pos);});
-  //
-  //   let divToMap = [];
-  //   totalChecked.forEach(arr => {
-  //     let sum = arr[0] * input + arr[1];
-  //     divToMap.push(sum);
-  //   });
-  //
-  //   console.log(divToMap);
-  //   divToMap.forEach(block => {
-  //     $(`#${block}`).addClass("purple");
-  //   });
-  // }
 
   solve() {
     this.openList.push(JSON.stringify(this.start));
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
-
-
 
     while (!this.openList.includes(JSON.stringify(this.end))) {
       let nextMove = this.lowestFCost();
@@ -394,14 +305,18 @@ class Maze {
       this.closedList.push(removedPos[0]);
       this.calculateOpenAdjacentSquares(nextMove);
     }
+
     console.log(this.openList);
     console.log(this.closedList);
     this.path();
   }
 
+  setup() {
+
+  }
+
   lowestFCost() {
     let position;
-
     let lowest = 1000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
@@ -417,6 +332,7 @@ class Maze {
   calculateH(currentPos, endPoint) {
     return (Math.abs(currentPos[0] - endPoint[0]) + Math.abs(currentPos[currentPos.length - 1] - endPoint[endPoint.length - 1])) * 10;
   }
+
 
 }
 
@@ -442,8 +358,11 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("How many grids do you want?");
-
+    var input = prompt("What grid size do you want? (Max: 50)");
+    while (input > 50) {
+      prompt("Sorry, the max grid size is 50. Please choose a lower number.")
+      input = prompt("What grid size do you want?")
+    }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
 
@@ -454,8 +373,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var gridCount = input * input;
 
-    $("body").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
-    $("body").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
+    $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
+    $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
 
     for (var i = 0; i < gridCount; i++){
         $("#container").append(`<div class='grid' id=${i} ondrop="drop(event)" ondragover="allowDrop(event)"></div>`);
@@ -490,7 +409,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
 
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, 0, 50, 50);
 
 
 
