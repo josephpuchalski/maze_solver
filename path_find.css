@@ -62,3 +62,7 @@ button {
   left: 0px;
   z-index: -1;
 }
+
+.instructions {
+  margin-bottom: 20px;
+}

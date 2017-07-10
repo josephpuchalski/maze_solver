@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var input = prompt("What grid size do you want? (Max: 50)");
     while (input > 50) {
-      prompt("Sorry, the max grid size is 50. Please choose a lower number.")
-      input = prompt("What grid size do you want?")
+      alert("Sorry, the max grid size is 50. Please choose a lower number.");
+      input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
@@ -48,11 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".solve").on("click", function() {
     let maze = new Maze();
     maze.processMaze();
-    maze.solve();
+    maze.solve("basic");
     console.log(maze);
+  });
 
-
-
+  $(".visualsolve").on("click", function() {
+    let maze = new Maze();
+    maze.processMaze();
+    maze.solve("visual");
+    console.log(maze);
   });
 
   $(".clear").on("click", function() {

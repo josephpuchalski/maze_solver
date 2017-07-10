@@ -264,7 +264,7 @@ class Maze {
   }
 
 
-  path() {
+  path(type) {
     let pathway = [];
     let parent = this.end;
 
@@ -273,9 +273,13 @@ class Maze {
       parent = this.maze[parent[0]][parent[1]].parent;
     }
 
-    this.colorizeList(this.closedList, "purple");
-    this.colorizeList(this.openList, "yellow");
-    this.colorizeList(pathway, "blue");
+    if (type === "basic") {
+      this.colorizeList(pathway, "blue");
+    } else {
+      this.colorizeList(pathway, "blue");
+      this.colorizeList(this.closedList, "purple");
+      this.colorizeList(this.openList, "yellow");
+    }
   }
 
   colorizeList(list, color) {
@@ -293,7 +297,7 @@ class Maze {
   }
 
 
-  solve() {
+  solve(type) {
     this.openList.push(JSON.stringify(this.start));
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
@@ -308,7 +312,7 @@ class Maze {
 
     console.log(this.openList);
     console.log(this.closedList);
-    this.path();
+    this.path(type);
   }
 
   setup() {
@@ -322,6 +326,7 @@ class Maze {
       pos = JSON.parse(pos);
       if (this.maze[pos[0]][pos[1]].f < lowest) {
         lowest = this.maze[pos[0]][pos[1]].f;
+        console.log(lowest);
         position = pos;
       }
     });
@@ -360,8 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var input = prompt("What grid size do you want? (Max: 50)");
     while (input > 50) {
-      prompt("Sorry, the max grid size is 50. Please choose a lower number.")
-      input = prompt("What grid size do you want?")
+      alert("Sorry, the max grid size is 50. Please choose a lower number.");
+      input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
@@ -397,11 +402,15 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".solve").on("click", function() {
     let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
     maze.processMaze();
-    maze.solve();
+    maze.solve("basic");
     console.log(maze);
+  });
 
-
-
+  $(".visualsolve").on("click", function() {
+    let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
+    maze.processMaze();
+    maze.solve("visual");
+    console.log(maze);
   });
 
   $(".clear").on("click", function() {
