@@ -12,8 +12,8 @@
 #container {
   position:relative;
   background:white;
-  width:500px;
-  height:500px;
+  width:750px;
+  height:750px;
   margin:0 auto;
 }
 
@@ -49,6 +49,14 @@ button {
   background:yellow;
 }
 
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+
 #start {
   background: green;
 }
@@ -60,7 +68,7 @@ button {
 #canvas {
   position:absolute;
   left: 0px;
-  z-index: -1;
+  z-index:-1;
 }
 
 .instructions {

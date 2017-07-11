@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var cwidth = container.width();
 
     var input = prompt("What grid size do you want? (Max: 50)");
-    while (input > 50) {
+    while (input > 200) {
       alert("Sorry, the max grid size is 50. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var gridCount = input * input;
 
-    $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
-    $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
+    // $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
+    // $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
 
     for (var i = 0; i < gridCount; i++){
-        $("#container").append(`<div class='grid' id=${i} ondrop="drop(event)" ondragover="allowDrop(event)"></div>`);
+        $("#container").append(`<div class='grid fakeImage' id=${i} ondrop="drop(event)" ondragover="allowDrop(event)"></div>`);
     }
 
     $(".grid").height(gheight + "px").width(gwidth + "px");
@@ -38,6 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
     $(".grid").on("click", function() {
       $(this).toggleClass("black");
     });
+
+    var image = null;
+
+      $('.fakeImage').on('mouseover', function(e) {
+        console.log(e.currentTarget);
+          image = $(e.currentTarget);
+      });
+
+      $('.fakeImage').on('mouseout', function(e) {
+          image = null;
+      });
+
+      $(document).keypress(function(e) {
+
+          if (e.which == 98 && image) {
+              $(`#${image.attr('id')}`).toggleClass("black");
+          } else if (e.which == 115 && image) {
+            $(`#${image.attr('id')}`).append('<div id="start" draggable="true" ondragstart="drag(event)"></div>').toggleClass("green");
+          } else if (e.which == 101 && image) {
+            $(`#${image.attr('id')}`).append('<div id="end" draggable="true" ondragstart="drag(event)"></div>').toggleClass("red");
+          }
+      });
   }
 
   $(".create-grid").on("click", function() {
@@ -60,33 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("blue purple yellow");
+    $(".grid").removeClass("blue purple yellow black green red");
   });
 
-
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = 'green';
-  ctx.fillRect(0, 0, 50, 50);
-
-
-
-
-
-
-// test code to see how many areas are blocked(null)
-// for (var i = 0; i < maze.maze.length; i++) {
-//   for (var j = 0; j < maze.maze[i].length; j++) {
-//     if (maze.maze[i][j] === null) {
-//       console.log("empty");
-//     }
-//   }
-// }
-
-
-
-
+  $(".fillgrid").on("click", function() {
+    Array.from($(".grid")).forEach((block, idx) => {
+      if (Math.floor(Math.random() * 10) < 5) {
+        $(`#${idx}`).addClass("black");
+      }
+    });
+  });
 
 
 

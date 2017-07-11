@@ -15,6 +15,29 @@ class Maze {
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
+    // Array.from($(".grid")).forEach((block, idx) => {
+    //   if (block.children.length > 0) {
+    //     if (block.children[0].id === "start") {
+    //       chunk.push(new Square({start: true}));
+    //       let location = [result.length, chunk.length - 1];
+    //       this.start = location;
+    //     } else {
+    //       chunk.push(new Square({end: true}));
+    //       let location = [result.length, chunk.length - 1];
+    //       this.end = location;
+    //     }
+    //   } else if (block.className.includes("black")) {
+    //     chunk.push(null);
+    //   } else {
+    //     chunk.push(new Square());
+    //   }
+    //
+    //   if (chunk.length === processChunk) {
+    //     result.push(chunk);
+    //     chunk = [];
+    //   }
+    // });
+
     Array.from($(".grid")).forEach((block, idx) => {
       if (block.children.length > 0) {
         if (block.children[0].id === "start") {
@@ -92,7 +115,7 @@ class Maze {
 
   calculateOpenAdjacentSquares(pos) {
     let ignorePos = this.orthogonal(pos);
-    this.diagonal(pos, ignorePos);
+    this.diagonal(pos, []);
   }
 
   diagonal(pos, ignorePos) {
@@ -181,15 +204,19 @@ class Maze {
     }
 
     if (type === "basic") {
-      this.colorizeList(pathway, "blue");
+      this.colorizeList(pathway, "blue", 50);
     } else {
-      this.colorizeList(pathway, "blue");
-      this.colorizeList(this.closedList, "purple");
-      this.colorizeList(this.openList, "yellow");
+      this.colorizeList(this.closedList, "purple", 0);
+      this.colorizeList(this.openList, "yellow", 0);
+      this.colorizeList(pathway, "blue", 50);
     }
   }
 
-  colorizeList(list, color) {
+  sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  colorizeList(list, color, timer) {
     let toColorize = list.map(pos => { return JSON.parse(pos);});
 
     let divToColor = [];
@@ -197,9 +224,15 @@ class Maze {
       let sum = arr[0] * input + arr[1];
       divToColor.push(sum);
     });
-
+    let i = 0;
+    if (color === "blue") {
+      divToColor = divToColor.reverse();
+    }
     divToColor.forEach(block => {
-      $(`#${block}`).addClass(color);
+      // $(`#${block}`).addClass(color);
+      // let change = document.getElementById(`${block}`);
+      this.sleep(i).then(() => {$(`#${block}`).addClass(color);});
+      i += timer;
     });
   }
 

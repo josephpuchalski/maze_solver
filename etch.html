@@ -18,14 +18,14 @@ function drop(e) {
   e.preventDefault();
   var data = e.dataTransfer.getData("text");
   e.target.appendChild(document.getElementById(data));
+
 }
+
 </script>
 
 </head>
 <body>
   <h1>Joey P's Path Finder</h1>
-  <br />
-  <br />
   <div class="instructions">
   <h2>Instructions</h2>
   <p>Click Create to generate a new grid (Recommended sizes are 10, 15, 20)</p>
@@ -40,6 +40,8 @@ function drop(e) {
     <button class="solve">SOLVE</button>
     <button class="visualsolve">VISUAL SOLVE</button>
     <button class="clear">CLEAR</button>
+    <button class="fillgrid">Fill Grid</button>
+    <button class="move">MOVE</button>
   </div>
   <div class="start-end"></div>
   <div id="container">
@@ -47,5 +49,31 @@ function drop(e) {
   </div>
   <a href="http://www.github.com/josephpuchalski">Github</a>
   <a href="http://www.linkedin.com/in/josephpuchalski">LinkedIn</a>
+
+  <script type="text/javascript">
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, 0, 50, 50);
+
+  $(".move").on("click", function () {
+    let i = 0;
+    let j = 0;
+    while (i < 50) {
+      setTimeout(() => {
+        j++
+        ctx.clearRect(0,0,50,50);
+        ctx.beginPath();
+        ctx.fillStyle = "green";
+        ctx.fillRect(j, 0, 50, 50);
+        ctx.closePath();
+        ctx.fill();
+        console.log(i);
+      }, 100);
+      i++
+    }
+  });
+
+  </script>
 </body>
 </html>
