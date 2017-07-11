@@ -295,11 +295,11 @@ class Maze {
     }
 
     if (type === "basic") {
-      this.colorizeList(pathway, "blue", 50);
+      this.colorizeList(pathway, "blue", 25);
     } else {
       this.colorizeList(this.closedList, "purple", 0);
       this.colorizeList(this.openList, "yellow", 0);
-      this.colorizeList(pathway, "blue", 50);
+      this.colorizeList(pathway, "blue", 25);
     }
   }
 
@@ -334,7 +334,7 @@ class Maze {
     this.closedList.push(this.openList.shift());
     while (!this.openList.includes(JSON.stringify(this.end))) {
       if (this.openList.length === 0) {
-        alert("THERE IS NO PATH!");
+        this.colorizeList(this.closedList, "purple", 0);
       }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
@@ -343,8 +343,8 @@ class Maze {
       this.calculateOpenAdjacentSquares(nextMove);
     }
 
-    console.log(this.openList);
-    console.log(this.closedList);
+    console.log(this.openList.length);
+    console.log(this.closedList.length);
     this.path(type);
   }
 
@@ -354,12 +354,11 @@ class Maze {
 
   lowestFCost() {
     let position;
-    let lowest = 1000000;
+    let lowest = 1000000000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
       if (this.maze[pos[0]][pos[1]].f < lowest) {
         lowest = this.maze[pos[0]][pos[1]].f;
-        console.log(lowest);
         position = pos;
       }
     });
@@ -396,16 +395,13 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("What grid size do you want? (Max: 100)");
-    while (input > 100) {
-      alert("Sorry, the max grid size is 100. Please choose a lower number.");
+    var input = prompt("What grid size do you want? (Max: 150)");
+    while (input > 150) {
+      alert("Sorry, the max grid size is 150. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
-
-    console.log(gheight);
-    console.log(gwidth);
 
     window.input = input;
 
@@ -481,12 +477,19 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".fillgrid").on("click", function() {
     $(".grid").removeClass("blue purple yellow black red green");
     Array.from($(".grid")).forEach((block, idx) => {
-      if (Math.random() * 10 < 5.5) {
+      if (Math.random() * 10 < 5.3) {
         $(`#${idx}`).addClass("black");
       }
     });
   });
 
+  $(".fillclosedpaths").on("click", function() {
+    Array.from($(".grid")).forEach((block, idx) => {
+    if (!block.className.includes("purple")) {
+        $(`#${idx}`).addClass("black");
+    }
+  });
+});
 
 
 

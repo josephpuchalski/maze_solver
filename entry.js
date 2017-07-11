@@ -9,16 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("What grid size do you want? (Max: 100)");
-    while (input > 100) {
-      alert("Sorry, the max grid size is 100. Please choose a lower number.");
+    var input = prompt("What grid size do you want? (Max: 150)");
+    while (input > 150) {
+      alert("Sorry, the max grid size is 150. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
     var gwidth = cwidth / input;
-
-    console.log(gheight);
-    console.log(gwidth);
 
     window.input = input;
 
@@ -94,12 +91,19 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".fillgrid").on("click", function() {
     $(".grid").removeClass("blue purple yellow black red green");
     Array.from($(".grid")).forEach((block, idx) => {
-      if (Math.random() * 10 < 5.5) {
+      if (Math.random() * 10 < 5.3) {
         $(`#${idx}`).addClass("black");
       }
     });
   });
 
+  $(".fillclosedpaths").on("click", function() {
+    Array.from($(".grid")).forEach((block, idx) => {
+    if (!block.className.includes("purple")) {
+        $(`#${idx}`).addClass("black");
+    }
+  });
+});
 
 
 

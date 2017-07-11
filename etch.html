@@ -44,7 +44,7 @@ function drop(e) {
         <button class="visualsolve">VISUAL SOLVE</button>
         <button class="clear">CLEAR</button>
         <button class="fillgrid">Fill Grid</button>
-        <button class="move">MOVE</button>
+        <button class="fillclosedpaths">Remove Closed Paths</button>
       </div>
     </div>
     <footer>
@@ -52,30 +52,5 @@ function drop(e) {
       <a href="http://www.linkedin.com/in/josephpuchalski">LinkedIn</a>
     </footer>
   </div>
-  <script type="text/javascript">
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'green';
-  ctx.fillRect(0, 0, 50, 50);
-
-  $(".move").on("click", function () {
-    let i = 0;
-    let j = 0;
-    while (i < 50) {
-      setTimeout(() => {
-        j++
-        ctx.clearRect(0,0,50,50);
-        ctx.beginPath();
-        ctx.fillStyle = "green";
-        ctx.fillRect(j, 0, 50, 50);
-        ctx.closePath();
-        ctx.fill();
-        console.log(i);
-      }, 100);
-      i++
-    }
-  });
-
-  </script>
 </body>
 </html>

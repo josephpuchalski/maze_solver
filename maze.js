@@ -202,11 +202,11 @@ class Maze {
     }
 
     if (type === "basic") {
-      this.colorizeList(pathway, "blue", 50);
+      this.colorizeList(pathway, "blue", 25);
     } else {
       this.colorizeList(this.closedList, "purple", 0);
       this.colorizeList(this.openList, "yellow", 0);
-      this.colorizeList(pathway, "blue", 50);
+      this.colorizeList(pathway, "blue", 25);
     }
   }
 
@@ -241,7 +241,7 @@ class Maze {
     this.closedList.push(this.openList.shift());
     while (!this.openList.includes(JSON.stringify(this.end))) {
       if (this.openList.length === 0) {
-        alert("THERE IS NO PATH!");
+        this.colorizeList(this.closedList, "purple", 0);
       }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
@@ -250,8 +250,8 @@ class Maze {
       this.calculateOpenAdjacentSquares(nextMove);
     }
 
-    console.log(this.openList);
-    console.log(this.closedList);
+    console.log(this.openList.length);
+    console.log(this.closedList.length);
     this.path(type);
   }
 
@@ -261,12 +261,11 @@ class Maze {
 
   lowestFCost() {
     let position;
-    let lowest = 1000000;
+    let lowest = 1000000000000;
     this.openList.forEach(pos => {
       pos = JSON.parse(pos);
       if (this.maze[pos[0]][pos[1]].f < lowest) {
         lowest = this.maze[pos[0]][pos[1]].f;
-        console.log(lowest);
         position = pos;
       }
     });
