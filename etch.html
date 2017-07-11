@@ -25,31 +25,33 @@ function drop(e) {
 
 </head>
 <body>
-  <h1>Joey P's Path Finder</h1>
-  <div class="instructions">
-  <h2>Instructions</h2>
-  <p>Click Create to generate a new grid (Recommended sizes are 10, 15, 20)</p>
-  <p>Simply drag the Green Square (Start Point) and Red Square (End Point) on the grid and click Solve to see the pathway show up in blue</p>
-  <p>If you would like to see which grid blocks were processed by the algorithm, click Visual Solve</p>
-  <p>In Visual Solve, the yellow grid block represents those still on the open list or those blocks added but not looked at. The purple represents grid blocks that were processed</p>
-  <p>You can also create custom collison block simply by clicking any one of the grid which will then indicate by changing to black</p>
-  <p>If you want to clear the previous calculated path, just click the Clear button! Have Fun!</p>
+  <div class="main-box">
+    <h1>Joey P's Path Finder</h1>
+    <div class="middle-box">
+      <div class="instructions">
+      <h2>Instructions</h2>
+      <p>Click Create to generate a new grid (Recommended sizes are 25, 50, 75, 100)</p>
+      <p>Simply drag the Green Square (Start Point) and Red Square (End Point) on the grid and click Solve to see the pathway show up in blue</p>
+      <p>If you would like to see which grid blocks were processed by the algorithm, click Visual Solve</p>
+      <p>In Visual Solve, the yellow grid block represents those still on the open list or those blocks added but not looked at. The purple represents grid blocks that were processed</p>
+      <p>You can also create custom collison block simply by clicking any one of the grid which will then indicate by changing to black</p>
+      <p>If you want to clear the previous calculated path, just click the Clear button! Have Fun!</p>
+      </div>
+      <div id="container"></div>
+      <div class="control-panel">
+        <button class="create-grid">CREATE</button>
+        <button class="solve">SOLVE</button>
+        <button class="visualsolve">VISUAL SOLVE</button>
+        <button class="clear">CLEAR</button>
+        <button class="fillgrid">Fill Grid</button>
+        <button class="move">MOVE</button>
+      </div>
+    </div>
+    <footer>
+      <a href="http://www.github.com/josephpuchalski">Github</a>
+      <a href="http://www.linkedin.com/in/josephpuchalski">LinkedIn</a>
+    </footer>
   </div>
-  <div class="control-panel">
-    <button class="create-grid">CREATE</button>
-    <button class="solve">SOLVE</button>
-    <button class="visualsolve">VISUAL SOLVE</button>
-    <button class="clear">CLEAR</button>
-    <button class="fillgrid">Fill Grid</button>
-    <button class="move">MOVE</button>
-  </div>
-  <div class="start-end"></div>
-  <div id="container">
-    <canvas width="500" height="500" id="canvas"></canvas>
-  </div>
-  <a href="http://www.github.com/josephpuchalski">Github</a>
-  <a href="http://www.linkedin.com/in/josephpuchalski">LinkedIn</a>
-
   <script type="text/javascript">
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');

@@ -14,7 +14,7 @@
   background:white;
   width:750px;
   height:750px;
-  margin:0 auto;
+  border: 1px solid black;
 }
 
 
@@ -27,6 +27,7 @@
 body {
   z-index: -10;
   text-align:center;
+  background: #ada695;
 
 }
 button {
@@ -72,5 +73,28 @@ button {
 }
 
 .instructions {
+  border:1px solid red;
+  width: 18%;
   margin-bottom: 20px;
+
+}
+
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  width: 18%;
+}
+
+.main-box {
+  display:flex;
+  flex-direction: column;
+}
+
+.middle-box {
+  min-width: 1250px;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: space-between;
 }

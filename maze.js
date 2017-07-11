@@ -39,16 +39,14 @@ class Maze {
     // });
 
     Array.from($(".grid")).forEach((block, idx) => {
-      if (block.children.length > 0) {
-        if (block.children[0].id === "start") {
-          chunk.push(new Square({start: true}));
-          let location = [result.length, chunk.length - 1];
-          this.start = location;
-        } else {
-          chunk.push(new Square({end: true}));
-          let location = [result.length, chunk.length - 1];
-          this.end = location;
-        }
+      if (block.className.includes("green")) {
+        chunk.push(new Square({start: true}));
+        let location = [result.length, chunk.length - 1];
+        this.start = location;
+      } else if (block.className.includes("red")) {
+        chunk.push(new Square({end: true}));
+        let location = [result.length, chunk.length - 1];
+        this.end = location;
       } else if (block.className.includes("black")) {
         chunk.push(null);
       } else {
@@ -241,8 +239,10 @@ class Maze {
     this.openList.push(JSON.stringify(this.start));
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
-
     while (!this.openList.includes(JSON.stringify(this.end))) {
+      if (this.openList.length === 0) {
+        alert("THERE IS NO PATH!");
+      }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
       let removedPos = this.openList.splice(nextMoveIndex, 1);

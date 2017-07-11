@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("What grid size do you want? (Max: 50)");
-    while (input > 200) {
-      alert("Sorry, the max grid size is 50. Please choose a lower number.");
+    var input = prompt("What grid size do you want? (Max: 100)");
+    while (input > 100) {
+      alert("Sorry, the max grid size is 100. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
@@ -42,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var image = null;
 
       $('.fakeImage').on('mouseover', function(e) {
-        console.log(e.currentTarget);
           image = $(e.currentTarget);
       });
 
@@ -55,9 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
           if (e.which == 98 && image) {
               $(`#${image.attr('id')}`).toggleClass("black");
           } else if (e.which == 115 && image) {
-            $(`#${image.attr('id')}`).append('<div id="start" draggable="true" ondragstart="drag(event)"></div>').toggleClass("green");
+            $(`#${window.green}`).removeClass("green");
+            $(`#${image.attr('id')}`).addClass("green");
+            window.green = image.attr('id');
           } else if (e.which == 101 && image) {
-            $(`#${image.attr('id')}`).append('<div id="end" draggable="true" ondragstart="drag(event)"></div>').toggleClass("red");
+            $(`#${window.red}`).removeClass("red");
+            $(`#${image.attr('id')}`).addClass("red");
+            window.red = image.attr('id');
+            let maze = new Maze();
+            maze.processMaze();
+            maze.solve("visual");
           }
       });
   }
@@ -82,12 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("blue purple yellow black green red");
+    $(".grid").removeClass("blue purple yellow black");
   });
 
   $(".fillgrid").on("click", function() {
+    $(".grid").removeClass("blue purple yellow black red green");
     Array.from($(".grid")).forEach((block, idx) => {
-      if (Math.floor(Math.random() * 10) < 5) {
+      if (Math.random() * 10 < 5.5) {
         $(`#${idx}`).addClass("black");
       }
     });

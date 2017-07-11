@@ -132,16 +132,14 @@ class Maze {
     // });
 
     Array.from($(".grid")).forEach((block, idx) => {
-      if (block.children.length > 0) {
-        if (block.children[0].id === "start") {
-          chunk.push(new __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]({start: true}));
-          let location = [result.length, chunk.length - 1];
-          this.start = location;
-        } else {
-          chunk.push(new __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]({end: true}));
-          let location = [result.length, chunk.length - 1];
-          this.end = location;
-        }
+      if (block.className.includes("green")) {
+        chunk.push(new __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]({start: true}));
+        let location = [result.length, chunk.length - 1];
+        this.start = location;
+      } else if (block.className.includes("red")) {
+        chunk.push(new __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */]({end: true}));
+        let location = [result.length, chunk.length - 1];
+        this.end = location;
       } else if (block.className.includes("black")) {
         chunk.push(null);
       } else {
@@ -334,8 +332,10 @@ class Maze {
     this.openList.push(JSON.stringify(this.start));
     this.calculateOpenAdjacentSquares(JSON.parse(this.openList[0]));
     this.closedList.push(this.openList.shift());
-
     while (!this.openList.includes(JSON.stringify(this.end))) {
+      if (this.openList.length === 0) {
+        alert("THERE IS NO PATH!");
+      }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
       let removedPos = this.openList.splice(nextMoveIndex, 1);
@@ -396,9 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("What grid size do you want? (Max: 50)");
-    while (input > 200) {
-      alert("Sorry, the max grid size is 50. Please choose a lower number.");
+    var input = prompt("What grid size do you want? (Max: 100)");
+    while (input > 100) {
+      alert("Sorry, the max grid size is 100. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
@@ -429,7 +429,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var image = null;
 
       $('.fakeImage').on('mouseover', function(e) {
-        console.log(e.currentTarget);
           image = $(e.currentTarget);
       });
 
@@ -442,9 +441,16 @@ document.addEventListener('DOMContentLoaded', () => {
           if (e.which == 98 && image) {
               $(`#${image.attr('id')}`).toggleClass("black");
           } else if (e.which == 115 && image) {
-            $(`#${image.attr('id')}`).append('<div id="start" draggable="true" ondragstart="drag(event)"></div>').toggleClass("green");
+            $(`#${window.green}`).removeClass("green");
+            $(`#${image.attr('id')}`).addClass("green");
+            window.green = image.attr('id');
           } else if (e.which == 101 && image) {
-            $(`#${image.attr('id')}`).append('<div id="end" draggable="true" ondragstart="drag(event)"></div>').toggleClass("red");
+            $(`#${window.red}`).removeClass("red");
+            $(`#${image.attr('id')}`).addClass("red");
+            window.red = image.attr('id');
+            let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
+            maze.processMaze();
+            maze.solve("visual");
           }
       });
   }
@@ -469,12 +475,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("blue purple yellow black green red");
+    $(".grid").removeClass("blue purple yellow black");
   });
 
   $(".fillgrid").on("click", function() {
+    $(".grid").removeClass("blue purple yellow black red green");
     Array.from($(".grid")).forEach((block, idx) => {
-      if (Math.floor(Math.random() * 10) < 5) {
+      if (Math.random() * 10 < 5.5) {
         $(`#${idx}`).addClass("black");
       }
     });
