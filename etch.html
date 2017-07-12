@@ -16,12 +16,17 @@
     <div class="middle-box">
       <div class="instructions">
       <h2>Instructions</h2>
-      <p>Click Create to generate a new grid (Recommended sizes are 25, 50, 75, 100)</p>
-      <p>Simply drag the Green Square (Start Point) and Red Square (End Point) on the grid and click Solve to see the pathway show up in blue</p>
-      <p>If you would like to see which grid blocks were processed by the algorithm, click Visual Solve</p>
-      <p>In Visual Solve, the yellow grid block represents those still on the open list or those blocks added but not looked at. The purple represents grid blocks that were processed</p>
-      <p>You can also create custom collison block simply by clicking any one of the grid which will then indicate by changing to black</p>
-      <p>If you want to clear the previous calculated path, just click the Clear button! Have Fun!</p>
+      <p>
+      In the Control Panel on the right side, please type a grid size and click "Create Grid" (Recommended Sizes are 70, 80, 90, 100).
+
+      <p>You can generate a grid simply by clicking "Fill Grid." You can keep clicking this until you find a grid pattern that you enjoy.</p>
+      <p>After you are happy with the pattern, you can place the start point by hovering over a grid block and typing the letter "S".
+      This will place a green colored "Start" Square.</p>
+    <p>  Now all you have to do to calculate the shortest path to anywhere you click is simply hover over a different square and type "E".
+      This will place a red colored "End" Square and you can watch the magic begin! You can now simply type "E" over different areas and it will recalculate the path.</p>
+    <p>  If you are feeling crafty, you can also design your own pattern. You can toggle the black squares by either clicking on them or typing "B".
+      Enjoy and Have Fun!</p>
+      </p>
       <h2>Background</h2>
       <p>
         A path finding JavaScript program which utilizes the A* Algorithm to calculate the shortest path.
@@ -32,11 +37,17 @@
       <div id="container"></div>
       <div class="control-panel">
         <h2>Controls</h2>
-        <button class="create-grid">CREATE</button>
-        <button class="solve">SOLVE</button>
-        <button class="visualsolve">VISUAL SOLVE</button>
+        <input type="text" name="fname" placeholder="Enter a Grid Size" value="" id="size">
+        <button class="create-grid">CREATE GRID</button>
+        <button class="fillgrid">FILL GRID</button>
+        <!-- <button class="solve">SOLVE</button>
+        <button class="visualsolve">VISUAL SOLVE</button> -->
         <button class="clear">CLEAR</button>
-        <button class="fillgrid">Generate Grid</button>
+        <!-- <form>
+          <input type="radio" name="mode" value="od" checked>Shortest Path
+          <input type="radio" name="mode" value="o">Orthogonal Only
+          <input type="radio" name="mode" value="odnc">Orthogonal + Diagonal
+        </form> -->
       </div>
     </div>
     <footer>

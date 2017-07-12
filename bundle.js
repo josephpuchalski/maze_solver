@@ -299,7 +299,7 @@ class Maze {
     } else {
       this.colorizeList(this.closedList, "purple", 0);
       this.colorizeList(this.openList, "yellow", 0);
-      this.colorizeList(pathway, "blue", 25);
+      this.colorizeList(pathway, "blue", 35);
     }
   }
 
@@ -323,7 +323,6 @@ class Maze {
       if (color === "fill") {
         $(`#${block}`).addClass(color);
       } else {
-      // let change = document.getElementById(`${block}`);
       this.sleep(i).then(() => {$(`#${block}`).addClass(color);});
       i += timer;
     }
@@ -442,13 +441,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       $(document).keypress(function(e) {
-          if (e.which == 98 && image) {
+          if ((e.which == 98 || e.which == 66) && image) {
               $(`#${image.attr('id')}`).toggleClass("black");
-          } else if (e.which == 115 && image && !image.attr("class").includes("black")) {
+          } else if ((e.which == 115 || e.which == 83) && image && !image.attr("class").includes("black")) {
             $(`#${window.green}`).removeClass("green");
             $(`#${image.attr('id')}`).addClass("green");
             window.green = image.attr('id');
-          } else if (e.which == 101 && image && !image.attr("class").includes("black")) {
+          } else if ((e.which == 101 || e.which == 69) && image && !image.attr("class").includes("black")) {
             $(`#${window.red}`).removeClass("red");
             $(`#${image.attr('id')}`).addClass("red");
             window.red = image.attr('id');
@@ -460,8 +459,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   $(".create-grid").on("click", function() {
+    let gridSize = $("#size").val();
+    $("#size").val("");
     $(".grid").remove();
-    newGrid();
+    newGrid(gridSize);
   });
 
   $(".solve").on("click", function() {
@@ -479,24 +480,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $(".clear").on("click", function() {
-    $(".grid").removeClass("blue purple yellow black");
+    $(".grid").removeClass("blue purple yellow black red green");
   });
 
 
   $(".fillgrid").on("click", function() {
     $(".grid").removeClass("blue purple yellow black red green fill");
+    const n =  Number(input);
     Array.from($(".grid")).forEach((block, idx) => {
-      if ((Math.floor(Math.random() * 10 < 5) || idx === 1 || idx === 100 || idx === 101) && idx !== 0 && idx !== 5050) {
+      if ((Math.floor(Math.random() * 10 < 5) || idx === 1 || idx === n || idx === n + 1) && idx !== 0 && idx !== (n * n / 2 + n / 2)) {
         $(`#${idx}`).addClass("black");
       } else if (idx === 0) {
         $(`#${idx}`).addClass("red");
-      } else if (idx === 5050) {
-          $(`#${idx}`).addClass("green");
+      } else if (idx === (n * n / 2 + n / 2)) {
+        $(`#${idx}`).addClass("green");
       }
     });
     let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
     maze.processMaze();
     maze.solve("fill");
+
+
   });
 
 //   $(".fillclosedpaths").on("click", function() {
@@ -507,8 +511,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //   });
 //   $(".grid").removeClass("purple red green");
 // });
-
-
 
 
 

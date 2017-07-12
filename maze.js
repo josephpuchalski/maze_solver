@@ -206,7 +206,7 @@ class Maze {
     } else {
       this.colorizeList(this.closedList, "purple", 0);
       this.colorizeList(this.openList, "yellow", 0);
-      this.colorizeList(pathway, "blue", 25);
+      this.colorizeList(pathway, "blue", 35);
     }
   }
 
@@ -230,7 +230,6 @@ class Maze {
       if (color === "fill") {
         $(`#${block}`).addClass(color);
       } else {
-      // let change = document.getElementById(`${block}`);
       this.sleep(i).then(() => {$(`#${block}`).addClass(color);});
       i += timer;
     }
