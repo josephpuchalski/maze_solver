@@ -227,10 +227,13 @@ class Maze {
       divToColor = divToColor.reverse();
     }
     divToColor.forEach(block => {
-      // $(`#${block}`).addClass(color);
+      if (color === "fill") {
+        $(`#${block}`).addClass(color);
+      } else {
       // let change = document.getElementById(`${block}`);
       this.sleep(i).then(() => {$(`#${block}`).addClass(color);});
       i += timer;
+    }
     });
   }
 
@@ -241,7 +244,13 @@ class Maze {
     this.closedList.push(this.openList.shift());
     while (!this.openList.includes(JSON.stringify(this.end))) {
       if (this.openList.length === 0) {
-        this.colorizeList(this.closedList, "purple", 0);
+        this.colorizeList(this.closedList, "fill", 0);
+        Array.from($(".grid")).forEach((block, idx) => {
+          if (!block.className.includes("fill")) {
+            $(`#${idx}`).addClass("black");
+          }
+        });
+        $(".grid").removeClass("purple red green");
       }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));

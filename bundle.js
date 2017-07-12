@@ -320,10 +320,13 @@ class Maze {
       divToColor = divToColor.reverse();
     }
     divToColor.forEach(block => {
-      // $(`#${block}`).addClass(color);
+      if (color === "fill") {
+        $(`#${block}`).addClass(color);
+      } else {
       // let change = document.getElementById(`${block}`);
       this.sleep(i).then(() => {$(`#${block}`).addClass(color);});
       i += timer;
+    }
     });
   }
 
@@ -334,7 +337,13 @@ class Maze {
     this.closedList.push(this.openList.shift());
     while (!this.openList.includes(JSON.stringify(this.end))) {
       if (this.openList.length === 0) {
-        this.colorizeList(this.closedList, "purple", 0);
+        this.colorizeList(this.closedList, "fill", 0);
+        Array.from($(".grid")).forEach((block, idx) => {
+          if (!block.className.includes("fill")) {
+            $(`#${idx}`).addClass("black");
+          }
+        });
+        $(".grid").removeClass("purple red green");
       }
       let nextMove = this.lowestFCost();
       let nextMoveIndex = this.openList.indexOf(JSON.stringify(nextMove));
@@ -411,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
 
     for (var i = 0; i < gridCount; i++){
-        $("#container").append(`<div class='grid fakeImage' id=${i} ondrop="drop(event)" ondragover="allowDrop(event)"></div>`);
+        $("#container").append(`<div class='grid fakeImage' id=${i}></div>`);
     }
 
     $(".grid").height(gheight + "px").width(gwidth + "px");
@@ -433,14 +442,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       $(document).keypress(function(e) {
-
           if (e.which == 98 && image) {
               $(`#${image.attr('id')}`).toggleClass("black");
-          } else if (e.which == 115 && image) {
+          } else if (e.which == 115 && image && !image.attr("class").includes("black")) {
             $(`#${window.green}`).removeClass("green");
             $(`#${image.attr('id')}`).addClass("green");
             window.green = image.attr('id');
-          } else if (e.which == 101 && image) {
+          } else if (e.which == 101 && image && !image.attr("class").includes("black")) {
             $(`#${window.red}`).removeClass("red");
             $(`#${image.attr('id')}`).addClass("red");
             window.red = image.attr('id');
@@ -474,22 +482,33 @@ document.addEventListener('DOMContentLoaded', () => {
     $(".grid").removeClass("blue purple yellow black");
   });
 
+
   $(".fillgrid").on("click", function() {
-    $(".grid").removeClass("blue purple yellow black red green");
+    $(".grid").removeClass("blue purple yellow black red green fill");
     Array.from($(".grid")).forEach((block, idx) => {
-      if (Math.random() * 10 < 5.3) {
+      if ((Math.random() * 10 < 5.1 || idx === 1 || idx === 100 || idx === 101) && idx !== 0 && idx !== 5050) {
         $(`#${idx}`).addClass("black");
+      } else if (idx === 0) {
+        $(`#${idx}`).addClass("red");
+      } else if (idx === 5050) {
+          $(`#${idx}`).addClass("green");
       }
     });
+    debugger;
+    let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
+    maze.processMaze();
+    maze.solve("fill");
   });
 
   $(".fillclosedpaths").on("click", function() {
     Array.from($(".grid")).forEach((block, idx) => {
     if (!block.className.includes("purple")) {
-        $(`#${idx}`).addClass("black");
+      $(`#${idx}`).addClass("black");
     }
   });
+  $(".grid").removeClass("purple red green");
 });
+
 
 
 
