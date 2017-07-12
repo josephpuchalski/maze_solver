@@ -3,13 +3,13 @@ import Square from "./square.js";
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  function newGrid() {
+  function newGrid(gridSize) {
     var container = $("#container");
 
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = prompt("What grid size do you want? (Max: 150)");
+    var input = gridSize || prompt("What grid size do you want? (Max: 150)");
     while (input > 150) {
       alert("Sorry, the max grid size is 150. Please choose a lower number.");
       input = prompt("What grid size do you want?");
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   $(".fillgrid").on("click", function() {
     $(".grid").removeClass("blue purple yellow black red green fill");
     Array.from($(".grid")).forEach((block, idx) => {
-      if ((Math.random() * 10 < 5.1 || idx === 1 || idx === 100 || idx === 101) && idx !== 0 && idx !== 5050) {
+      if ((Math.floor(Math.random() * 10 < 5) || idx === 1 || idx === 100 || idx === 101) && idx !== 0 && idx !== 5050) {
         $(`#${idx}`).addClass("black");
       } else if (idx === 0) {
         $(`#${idx}`).addClass("red");
@@ -99,20 +99,19 @@ document.addEventListener('DOMContentLoaded', () => {
           $(`#${idx}`).addClass("green");
       }
     });
-    debugger;
     let maze = new Maze();
     maze.processMaze();
     maze.solve("fill");
   });
 
-  $(".fillclosedpaths").on("click", function() {
-    Array.from($(".grid")).forEach((block, idx) => {
-    if (!block.className.includes("purple")) {
-      $(`#${idx}`).addClass("black");
-    }
-  });
-  $(".grid").removeClass("purple red green");
-});
+//   $(".fillclosedpaths").on("click", function() {
+//     Array.from($(".grid")).forEach((block, idx) => {
+//     if (!block.className.includes("purple")) {
+//       $(`#${idx}`).addClass("black");
+//     }
+//   });
+//   $(".grid").removeClass("purple red green");
+// });
 
 
 

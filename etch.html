@@ -3,13 +3,16 @@
 <head>
   <title>Joey P's Path Finding</title>
   <link rel="stylesheet" type="text/css" href="./path_find.css">
+  <link rel="stylesheet" href="./assets/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="./bundle.js" type="text/javascript"></script>
 
 </head>
 <body>
   <div class="main-box">
-    <h1>Joey P's Path Finder</h1>
+    <header>
+      <h1>Joey P's Path Finder</h1>
+    </header>
     <div class="middle-box">
       <div class="instructions">
       <h2>Instructions</h2>
@@ -19,20 +22,26 @@
       <p>In Visual Solve, the yellow grid block represents those still on the open list or those blocks added but not looked at. The purple represents grid blocks that were processed</p>
       <p>You can also create custom collison block simply by clicking any one of the grid which will then indicate by changing to black</p>
       <p>If you want to clear the previous calculated path, just click the Clear button! Have Fun!</p>
+      <h2>Background</h2>
+      <p>
+        A path finding JavaScript program which utilizes the A* Algorithm to calculate the shortest path.
+        The program also uses the same A* Algorithm to generate its own complex pathways for traversal demonstration.
+        I wrote the program in mind to be easily integrated into other apps for point and click behavior with collision avoidance.
+      </p>
       </div>
       <div id="container"></div>
       <div class="control-panel">
+        <h2>Controls</h2>
         <button class="create-grid">CREATE</button>
         <button class="solve">SOLVE</button>
         <button class="visualsolve">VISUAL SOLVE</button>
         <button class="clear">CLEAR</button>
-        <button class="fillgrid">Fill Grid</button>
-        <button class="fillclosedpaths">Remove Closed Paths</button>
+        <button class="fillgrid">Generate Grid</button>
       </div>
     </div>
     <footer>
-      <a href="http://www.github.com/josephpuchalski">Github</a>
-      <a href="http://www.linkedin.com/in/josephpuchalski">LinkedIn</a>
+      <a target="_blank" href="http://www.github.com/josephpuchalski"><i class="fa fa-github fa-3x" aria-hidden="true"></i></a>
+      <a target="_blank" href="http://www.linkedin.com/in/josephpuchalski"><i class="fa fa-linkedin-square fa-3x" aria-hidden="true"></i></a>
     </footer>
   </div>
 </body>
