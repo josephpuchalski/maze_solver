@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var cheight = container.height();
     var cwidth = container.width();
 
-    var input = gridSize || prompt("What grid size do you want? (Max: 150)");
-    while (input > 150) {
-      alert("Sorry, the max grid size is 150. Please choose a lower number.");
+    var input = gridSize || prompt("What grid size do you want? (Max: 100)");
+    while (input > 100) {
+      alert("Sorry, the max grid size is 100. Please choose a lower number.");
       input = prompt("What grid size do you want?");
     }
     var gheight = cheight / input;
