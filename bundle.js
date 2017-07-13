@@ -297,9 +297,11 @@ class Maze {
     if (type === "basic") {
       this.colorizeList(pathway, "blue", 25);
     } else {
+      $(".runner").attr("src", "https://s3.us-east-2.amazonaws.com/travelscape-pro/seeker.gif");
       this.colorizeList(this.closedList, "purple", 0);
       this.colorizeList(this.openList, "yellow", 0);
       this.colorizeList(pathway, "blue", 35);
+      setTimeout(() => {$(".runner").attr("src", "https://s3.us-east-2.amazonaws.com/travelscape-pro/2.png");}, 3000);
     }
   }
 

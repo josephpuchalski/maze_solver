@@ -16,16 +16,17 @@
 
 #container {
   position:relative;
-  background:white;
   width:750px;
   height:750px;
   border: 5px solid silver;
+  background: white;
 }
 
 
 .grid {
   float:left;
-  background:transparent;
+  background: url("http://i.imgur.com/ob5wUHf.png");
+  background-size: 100% auto;
   box-shadow: inset 0 0 1px grey;
 }
 
@@ -103,7 +104,9 @@ button:active {
 
 
 .black {
-  background: black;
+  /*background: url("http://pixelartmaker.com/art/a5daa55be955c3d.png");*/
+  background: url("https://vignette1.wikia.nocookie.net/mario/images/9/98/Block_rock.PNG/revision/latest?cb=20130727034504&path-prefix=es");
+  background-size: 100% auto;
 }
 
 
@@ -237,11 +240,11 @@ h1 {
   }
 }
 
-@media (max-width: 650px) {
-  #container {
-    width: 100%;
-  }
-  h1 {
-    font-size: 3.5em;
-  }
+
+.runner {
+
+  width: 160px;
+  height:310px;
+  margin: 0 auto;
+  margin-top: 25px;
 }
