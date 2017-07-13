@@ -15,28 +15,6 @@ class Maze {
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
-    // Array.from($(".grid")).forEach((block, idx) => {
-    //   if (block.children.length > 0) {
-    //     if (block.children[0].id === "start") {
-    //       chunk.push(new Square({start: true}));
-    //       let location = [result.length, chunk.length - 1];
-    //       this.start = location;
-    //     } else {
-    //       chunk.push(new Square({end: true}));
-    //       let location = [result.length, chunk.length - 1];
-    //       this.end = location;
-    //     }
-    //   } else if (block.className.includes("black")) {
-    //     chunk.push(null);
-    //   } else {
-    //     chunk.push(new Square());
-    //   }
-    //
-    //   if (chunk.length === processChunk) {
-    //     result.push(chunk);
-    //     chunk = [];
-    //   }
-    // });
 
     Array.from($(".grid")).forEach((block, idx) => {
       if (block.className.includes("green")) {
@@ -135,9 +113,7 @@ class Maze {
           newSquare.f = newSquare.g + newSquare.h;
         }
       } else if (newSquare instanceof Square && !this.closedList.includes(JSON.stringify(location))) {
-        // if (newSquare.start !== true) {
-          newSquare.parent = pos;
-        // }
+        newSquare.parent = pos;
         newSquare.g = 14 + parentSquare.g;
         newSquare.h = this.calculateH(location, this.end);
         newSquare.f = newSquare.g + newSquare.h;
@@ -260,8 +236,6 @@ class Maze {
       this.calculateOpenAdjacentSquares(nextMove);
     }
 
-    console.log(this.openList.length);
-    console.log(this.closedList.length);
     this.path(type);
   }
 

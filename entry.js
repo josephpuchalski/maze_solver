@@ -21,11 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var gridCount = input * input;
 
-    // $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
-    // $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
-
     for (var i = 0; i < gridCount; i++){
-        $("#container").append(`<div class='grid fakeImage' id=${i}></div>`);
+        $("#container").append(`<div class='grid gridImage' id=${i}></div>`);
     }
 
     $(".grid").height(gheight + "px").width(gwidth + "px");
@@ -36,27 +33,27 @@ document.addEventListener('DOMContentLoaded', () => {
       $(this).toggleClass("black");
     });
 
-    var image = null;
+    var gridBlock = null;
 
-      $('.fakeImage').on('mouseover', function(e) {
-          image = $(e.currentTarget);
+      $('.gridImage').on('mouseover', function(e) {
+          gridBlock = $(e.currentTarget);
       });
 
-      $('.fakeImage').on('mouseout', function(e) {
-          image = null;
+      $('.gridImage').on('mouseout', function(e) {
+          gridBlock = null;
       });
 
       $(document).keypress(function(e) {
-          if ((e.which == 98 || e.which == 66) && image) {
-              $(`#${image.attr('id')}`).toggleClass("black");
-          } else if ((e.which == 115 || e.which == 83) && image && !image.attr("class").includes("black")) {
+          if ((e.which == 98 || e.which == 66) && gridBlock) {
+              $(`#${gridBlock.attr('id')}`).toggleClass("black");
+          } else if ((e.which == 115 || e.which == 83) && gridBlock && !gridBlock.attr("class").includes("black")) {
             $(`#${window.green}`).removeClass("green");
-            $(`#${image.attr('id')}`).addClass("green");
-            window.green = image.attr('id');
-          } else if ((e.which == 101 || e.which == 69) && image && !image.attr("class").includes("black")) {
+            $(`#${gridBlock.attr('id')}`).addClass("green");
+            window.green = gridBlock.attr('id');
+          } else if ((e.which == 101 || e.which == 69) && gridBlock && !gridBlock.attr("class").includes("black")) {
             $(`#${window.red}`).removeClass("red");
-            $(`#${image.attr('id')}`).addClass("red");
-            window.red = image.attr('id');
+            $(`#${gridBlock.attr('id')}`).addClass("red");
+            window.red = gridBlock.attr('id');
             let maze = new Maze();
             maze.processMaze();
             maze.solve("visual");
@@ -75,14 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let maze = new Maze();
     maze.processMaze();
     maze.solve("basic");
-    console.log(maze);
   });
 
   $(".visualsolve").on("click", function() {
     let maze = new Maze();
     maze.processMaze();
     maze.solve("visual");
-    console.log(maze);
   });
 
   $(".clear").on("click", function() {
@@ -108,22 +103,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   });
-
-//   $(".fillclosedpaths").on("click", function() {
-//     Array.from($(".grid")).forEach((block, idx) => {
-//     if (!block.className.includes("purple")) {
-//       $(`#${idx}`).addClass("black");
-//     }
-//   });
-//   $(".grid").removeClass("purple red green");
-// });
-
-
-
-
-
-
-
-
-
 });

@@ -108,28 +108,6 @@ class Maze {
     const processChunk = parseInt(window.input);
     let result = [];
     let chunk= [];
-    // Array.from($(".grid")).forEach((block, idx) => {
-    //   if (block.children.length > 0) {
-    //     if (block.children[0].id === "start") {
-    //       chunk.push(new Square({start: true}));
-    //       let location = [result.length, chunk.length - 1];
-    //       this.start = location;
-    //     } else {
-    //       chunk.push(new Square({end: true}));
-    //       let location = [result.length, chunk.length - 1];
-    //       this.end = location;
-    //     }
-    //   } else if (block.className.includes("black")) {
-    //     chunk.push(null);
-    //   } else {
-    //     chunk.push(new Square());
-    //   }
-    //
-    //   if (chunk.length === processChunk) {
-    //     result.push(chunk);
-    //     chunk = [];
-    //   }
-    // });
 
     Array.from($(".grid")).forEach((block, idx) => {
       if (block.className.includes("green")) {
@@ -228,9 +206,7 @@ class Maze {
           newSquare.f = newSquare.g + newSquare.h;
         }
       } else if (newSquare instanceof __WEBPACK_IMPORTED_MODULE_0__square_js__["a" /* default */] && !this.closedList.includes(JSON.stringify(location))) {
-        // if (newSquare.start !== true) {
-          newSquare.parent = pos;
-        // }
+        newSquare.parent = pos;
         newSquare.g = 14 + parentSquare.g;
         newSquare.h = this.calculateH(location, this.end);
         newSquare.f = newSquare.g + newSquare.h;
@@ -353,8 +329,6 @@ class Maze {
       this.calculateOpenAdjacentSquares(nextMove);
     }
 
-    console.log(this.openList.length);
-    console.log(this.closedList.length);
     this.path(type);
   }
 
@@ -417,11 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var gridCount = input * input;
 
-    // $(".start-end").append('<div id="start" draggable="true" ondragstart="drag(event)"></div>');
-    // $(".start-end").append('<div id="end" draggable="true" ondragstart="drag(event)"></div>');
-
     for (var i = 0; i < gridCount; i++){
-        $("#container").append(`<div class='grid fakeImage' id=${i}></div>`);
+        $("#container").append(`<div class='grid gridImage' id=${i}></div>`);
     }
 
     $(".grid").height(gheight + "px").width(gwidth + "px");
@@ -432,27 +403,27 @@ document.addEventListener('DOMContentLoaded', () => {
       $(this).toggleClass("black");
     });
 
-    var image = null;
+    var gridBlock = null;
 
-      $('.fakeImage').on('mouseover', function(e) {
-          image = $(e.currentTarget);
+      $('.gridImage').on('mouseover', function(e) {
+          gridBlock = $(e.currentTarget);
       });
 
-      $('.fakeImage').on('mouseout', function(e) {
-          image = null;
+      $('.gridImage').on('mouseout', function(e) {
+          gridBlock = null;
       });
 
       $(document).keypress(function(e) {
-          if ((e.which == 98 || e.which == 66) && image) {
-              $(`#${image.attr('id')}`).toggleClass("black");
-          } else if ((e.which == 115 || e.which == 83) && image && !image.attr("class").includes("black")) {
+          if ((e.which == 98 || e.which == 66) && gridBlock) {
+              $(`#${gridBlock.attr('id')}`).toggleClass("black");
+          } else if ((e.which == 115 || e.which == 83) && gridBlock && !gridBlock.attr("class").includes("black")) {
             $(`#${window.green}`).removeClass("green");
-            $(`#${image.attr('id')}`).addClass("green");
-            window.green = image.attr('id');
-          } else if ((e.which == 101 || e.which == 69) && image && !image.attr("class").includes("black")) {
+            $(`#${gridBlock.attr('id')}`).addClass("green");
+            window.green = gridBlock.attr('id');
+          } else if ((e.which == 101 || e.which == 69) && gridBlock && !gridBlock.attr("class").includes("black")) {
             $(`#${window.red}`).removeClass("red");
-            $(`#${image.attr('id')}`).addClass("red");
-            window.red = image.attr('id');
+            $(`#${gridBlock.attr('id')}`).addClass("red");
+            window.red = gridBlock.attr('id');
             let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
             maze.processMaze();
             maze.solve("visual");
@@ -471,14 +442,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
     maze.processMaze();
     maze.solve("basic");
-    console.log(maze);
   });
 
   $(".visualsolve").on("click", function() {
     let maze = new __WEBPACK_IMPORTED_MODULE_0__maze_js__["a" /* default */]();
     maze.processMaze();
     maze.solve("visual");
-    console.log(maze);
   });
 
   $(".clear").on("click", function() {
@@ -504,24 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   });
-
-//   $(".fillclosedpaths").on("click", function() {
-//     Array.from($(".grid")).forEach((block, idx) => {
-//     if (!block.className.includes("purple")) {
-//       $(`#${idx}`).addClass("black");
-//     }
-//   });
-//   $(".grid").removeClass("purple red green");
-// });
-
-
-
-
-
-
-
-
-
 });
 
 

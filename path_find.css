@@ -25,8 +25,7 @@
 
 .grid {
   float:left;
-  background: url("http://i.imgur.com/ob5wUHf.png");
-  background-size: 100% auto;
+  background: transparent;
   box-shadow: inset 0 0 1px grey;
 }
 
@@ -42,9 +41,6 @@ html {
 body {
   z-index: -10;
   text-align:center;
-  /*background-image: url("http://worldofdtcmarketing.com/wp-content/uploads/2014/04/Maze.jpg");*/
-  /*background-image: url("http://wallpapercave.com/wp/zE8Atuc.png");*/
-
 
 }
 
@@ -104,9 +100,7 @@ button:active {
 
 
 .black {
-  /*background: url("http://pixelartmaker.com/art/a5daa55be955c3d.png");*/
-  background: url("https://vignette1.wikia.nocookie.net/mario/images/9/98/Block_rock.PNG/revision/latest?cb=20130727034504&path-prefix=es");
-  background-size: 100% auto;
+  background: black;
 }
 
 

@@ -21,8 +21,6 @@ The app will be a single screen which will have various buttons to perform the m
 - Solve button to execute algorithm (Shortest Path)
 - Visual Solve button (Show the solving process and Shortest Path)
 
-  (IMAGE COMING SOON)
-
 ## Architecture and Technologies
   This project will implement the following technologies:
   - JavaScript
