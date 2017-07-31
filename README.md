@@ -37,6 +37,39 @@ There are many features included in this Path Finding application:
 
   The cap for the grid size for the application is 100 due to processing purposes, but it is easily unlocked to have any desired amount.
 
+  The grid is turned into a JavaScript multidimensional array using a custom processGrid function:
+
+  ```
+  processMaze() {
+    $(".grid").removeClass("blue purple yellow");
+    const processChunk = parseInt(window.input);
+    let result = [];
+    let chunk= [];
+
+    Array.from($(".grid")).forEach((block, idx) => {
+      if (block.className.includes("green")) {
+        chunk.push(new Square({start: true}));
+        let location = [result.length, chunk.length - 1];
+        this.start = location;
+      } else if (block.className.includes("red")) {
+        chunk.push(new Square({end: true}));
+        let location = [result.length, chunk.length - 1];
+        this.end = location;
+      } else if (block.className.includes("black")) {
+        chunk.push(null);
+      } else {
+        chunk.push(new Square());
+      }
+
+      if (chunk.length === processChunk) {
+        result.push(chunk);
+        chunk = [];
+      }
+    });
+    this.maze = result;
+  }
+```
+
 ### 4 Movement Modes
 
  It leverages the shortest path by default, but can also be extended to work with other specific movement conditions, such as:
